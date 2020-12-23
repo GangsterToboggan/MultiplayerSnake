@@ -2,6 +2,8 @@ package com.snake.main;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -26,7 +28,7 @@ class SnakeCanvas extends JPanel implements MouseListener{
     }
     public void update(double deltaMS) {
     	for (Snake s : snakes) {
-    		
+    		s.update(deltaMS);
     	}
     }
     
@@ -34,7 +36,7 @@ class SnakeCanvas extends JPanel implements MouseListener{
     	g.setColor(new Color(20,30,20));
     	g.drawRect(0, 0,3000,2000);
     	g.setColor(Color.red);
-    	g.fillRect(10, 10, 20, 20);
+    	//g.fillRect(10, 10, 20, 20);
     	for (Snake s : snakes) {
     		s.paintComponent(g);
     	}
@@ -74,5 +76,6 @@ class SnakeCanvas extends JPanel implements MouseListener{
 		
 	}
 
-    // ... other MouseListener methods ... //
+
+
 }

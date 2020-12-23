@@ -12,7 +12,7 @@ public class Main  {
 		System.out.println("Hello World");
 		System.out.println("ZAck mega gay");
 		Apple Apple = new Apple();
-		Snake snake = new Snake(new Vec2(600,400),new Vec2(5,5));
+		Snake snake = new Snake(new Vec2(600,400),new Vec2(20,5));
 		Apple.Test("Nominal");
 		SnakeCanvas canvas = new SnakeCanvas();
 		JFrame frame = new JFrame("Snake");
@@ -21,17 +21,21 @@ public class Main  {
         frame.add(canvas);
         frame.setVisible(true);
         
+        KeyboardManager keyManager = new KeyboardManager(snake);
+        frame.addKeyListener(keyManager);
         
         
         canvas.addSnake(snake);
         Thread t = new Thread() {
         	public void run() {
         		while (true) {
+        		
         		 frame.invalidate();
         	     frame.validate();
         	     frame.repaint();
+        	     canvas.update(20);
         	     try {
-					Thread.sleep(100);
+					Thread.sleep(20);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
