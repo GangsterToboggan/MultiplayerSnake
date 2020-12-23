@@ -22,6 +22,14 @@ public class Snake {
 	}
 	public void paintComponent(Graphics g) {
 		g.fillOval((int)pos.x, (int)pos.y, (int)snakeWidth, (int)snakeWidth);
+		for (int i = 0; i<tailPositions.size(); i ++) {
+			Vec2 tailPos = tailPositions.get(i);
+		}
+		
+	}
+	public void update(double deltaTime, double tickRate) {
+		pos.x = pos.x+deltaTime * vel.x;
+		pos.y = pos.y+deltaTime * vel.y;		
 	}
 	
 }
