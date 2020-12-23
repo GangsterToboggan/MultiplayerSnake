@@ -1,5 +1,6 @@
 package com.snake.main;
 
+import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,5 +12,8 @@ public class Snake {
 	public void Test(String s) {
 		System.out.println("Snake Class: "+s);;
 	
+	}
+	public void paintComponent(Graphics g) {
+		
 	}
 }

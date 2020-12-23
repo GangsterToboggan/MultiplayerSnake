@@ -6,4 +6,10 @@ public class Vec2 {
 		this.x=x1;
 		this.y=y1;
 	}
+	public double dot(Vec2 o) {
+		return x*o.x+y*o.y;
+	}
+	public double distTo(Vec2 o) {
+		return Math.sqrt((x-o.x)*(x-o.x)  + (y-o.y)*(y-o.y));
+	}
 }
