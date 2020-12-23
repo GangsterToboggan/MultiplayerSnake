@@ -16,4 +16,5 @@ public class Snake {
 	public void paintComponent(Graphics g) {
 		
 	}
+	
 }

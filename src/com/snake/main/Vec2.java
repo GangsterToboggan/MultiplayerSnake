@@ -12,4 +12,12 @@ public class Vec2 {
 	public double distTo(Vec2 o) {
 		return Math.sqrt((x-o.x)*(x-o.x)  + (y-o.y)*(y-o.y));
 	}
+	public void add(Vec2 o) {
+		x+=o.x;
+		y+=o.y;
+	}
+	public void scale(double s) {
+		x*=s;
+		y*=s;
+	}
 }
