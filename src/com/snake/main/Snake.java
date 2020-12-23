@@ -1,12 +1,13 @@
 package com.snake.main;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Snake {
 	public int score;
-	public double snakeWidth;
+	public double snakeWidth=10;
 	public Vec2 pos;
 	public Vec2 vel;
 	public List<Vec2> tailPositions = new ArrayList<Vec2>();
@@ -22,14 +23,6 @@ public class Snake {
 	}
 	public void paintComponent(Graphics g) {
 		g.fillOval((int)pos.x, (int)pos.y, (int)snakeWidth, (int)snakeWidth);
-		for (int i = 0; i<tailPositions.size(); i ++) {
-			Vec2 tailPos = tailPositions.get(i);
-		}
-		
-	}
-	public void update(double deltaTime, double tickRate) {
-		pos.x = pos.x+deltaTime * vel.x;
-		pos.y = pos.y+deltaTime * vel.y;		
 	}
 	
 }

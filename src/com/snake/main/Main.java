@@ -24,6 +24,24 @@ public class Main  {
         
         
         canvas.addSnake(snake);
+        Thread t = new Thread() {
+        	public void run() {
+        		while (true) {
+        		 frame.invalidate();
+        	     frame.validate();
+        	     frame.repaint();
+        	     try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+        		}
+        	}
+        };
+        t.start();
+        
+       
 
 	}
 }

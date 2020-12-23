@@ -24,6 +24,11 @@ class SnakeCanvas extends JPanel implements MouseListener{
     public void addApple(Apple a) {
     	this.apples.add(a);
     }
+    public void update(double deltaMS) {
+    	for (Snake s : snakes) {
+    		
+    	}
+    }
     
     public void paintComponent(Graphics g) {
     	g.setColor(new Color(20,30,20));
