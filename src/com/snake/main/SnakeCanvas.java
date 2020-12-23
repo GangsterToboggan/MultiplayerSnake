@@ -17,6 +17,7 @@ class SnakeCanvas extends JPanel implements MouseListener{
     public void paintComponent(Graphics g) {
     	g.setColor(Color.red);
     	g.drawRect(0, 50, 10, 20);
+    	g.fillOval(69, 420, 100, 200);
     }
 
     public void mouseClicked(MouseEvent e)

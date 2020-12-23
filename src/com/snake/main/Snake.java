@@ -1,14 +1,15 @@
 package com.snake.main;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Snake {
-	public int x;
-	public int y;
-	public double truex;
-	public double truey;
-	public double dx;
-	public double dy;
+	public Vec2 pos;
+	public Vec2 vel;
+	public List<Vec2> tailPositions = new ArrayList<Vec2>();
 	
-	public static void Test(String s) {
+	public void Test(String s) {
 		System.out.println("Snake Class: "+s);;
+	
 	}
 }
