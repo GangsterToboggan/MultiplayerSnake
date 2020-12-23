@@ -11,7 +11,7 @@ public class Snake {
 	public Vec2 vel;
 	public List<Vec2> tailPositions = new ArrayList<Vec2>();
 	
-	public void createSnake(Vec2 start, Vec2 initialVel) {
+	public  Snake(Vec2 start, Vec2 initialVel) {
 		pos = start;
 		vel = initialVel;
 	}
@@ -21,6 +21,6 @@ public class Snake {
 	
 	}
 	public void paintComponent(Graphics g) {
-		
+		g.fillOval((int)pos.x, (int)pos.y, (int)snakeWidth, (int)snakeWidth);
 	}
 }
