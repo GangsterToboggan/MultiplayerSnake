@@ -24,5 +24,8 @@ public class Snake {
 	public void paintComponent(Graphics g) {
 		g.fillOval((int)pos.x, (int)pos.y, (int)snakeWidth, (int)snakeWidth);
 	}
-	
+	public void update(double deltaMs) {
+		pos.x +=deltaMs*vel.x;
+		pos.y +=deltaMs*vel.y;
+	}
 }
