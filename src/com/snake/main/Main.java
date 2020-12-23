@@ -12,14 +12,18 @@ public class Main  {
 		System.out.println("Hello World");
 		System.out.println("ZAck mega gay");
 		Apple Apple = new Apple();
-		Snake Snake = new Snake();
+		Snake snake = new Snake(new Vec2(600,400),new Vec2(5,5));
 		Apple.Test("Nominal");
-		Snake.Test("Nominal");
+		SnakeCanvas canvas = new SnakeCanvas();
 		JFrame frame = new JFrame("Snake");
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(SCREEN_WIDTH,SCREEN_HEIGHT);
-        frame.add(new SnakeCanvas());
+        frame.add(canvas);
         frame.setVisible(true);
+        
+        
+        
+        canvas.addSnake(snake);
 
 	}
 }
