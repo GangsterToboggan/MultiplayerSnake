@@ -1,5 +1,7 @@
 package com.snake.main;
 
+import java.util.Random;
+
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
@@ -9,8 +11,12 @@ public class ClientGame {
 	public static final int SCREEN_WIDTH = 1200;
 	public static final int SCREEN_HEIGHT = 800;
 	public static void main(String[] args) {
-
-		ClientConnection conn = new ClientConnection("localhost",6666,"Zack",59);
+		run("localhost",6666,"Zack");
+	}
+	public static void run(String ip, int port, String username) {
+		Random rand = new Random();
+		rand.setSeed(0);
+		ClientConnection conn = new ClientConnection(ip,port,username,89);
 		
 		
 		

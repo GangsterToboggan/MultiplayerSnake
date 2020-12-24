@@ -74,9 +74,18 @@ public class ServerManager {
 					try {
 						dataSem.acquire();
 						for (Snake s : snakeMap.values()) {
-							s.update(20);
+							s.update(20, snakeMap.values(),apples);
 						}
-						//apples.add(new Apple(snakeMap.values()));
+						List<Apple> newApples = new ArrayList<>();
+						for (Apple a : apples) {
+							if (!a.isEaten()) {
+								newApples.add(a);
+							}
+						}
+						apples = newApples;
+						
+						apples.add(new Apple(snakeMap.values()));
+						System.out.println("Num Snakes : "+snakeMap.values().size());
 						broadcastGameState();
 						dataSem.release();
 						Thread.sleep(20);
@@ -88,6 +97,7 @@ public class ServerManager {
 		};
 		t.start();
 	}
+	
 	public void addSnake(int userId, String username) {
 		try {
 			dataSem.acquire();

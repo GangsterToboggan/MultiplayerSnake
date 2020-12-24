@@ -7,7 +7,9 @@ import java.util.List;
 
 public class Apple extends Entity {
    public Vec2 pos = new Vec2(0,0);
+   private boolean eaten=false;
    public int appleWidth=30;
+   public int numPoints = 10;
    public Apple(Collection<Snake> collection) {
 	   generateAppleLocation(collection);
    }
@@ -20,7 +22,7 @@ public class Apple extends Entity {
 	}
 	private boolean isSnakeThere(Collection<Snake> snakes, Vec2 pos) {
 		for (Snake snake : snakes) {
-			boolean a = isPosOccupied(snake, pos);
+			boolean a = snake.isPosOccupied(pos, appleWidth);
 			if (a==true) {
 				return true;
 			}
@@ -30,16 +32,11 @@ public class Apple extends Entity {
 	}
 	
 	
-	private boolean isPosOccupied(Snake s, Vec2 pos) {
-		boolean a = false;
-		for (Vec2 tailpos : s.tailPositions) {
-			a=pos.distTo(tailpos) < appleWidth;
-			if (a== true) {
-				return true;
-			}
-		}
-		return false;
-		
+	public boolean isEaten() {
+		return eaten;
+	}
+	public void setEaten(boolean val) {
+		this.eaten=val;
 	}
 	public double generateRandomNum(double max, double min) {
 		return Math.random() * (max - min + 1) + min;
