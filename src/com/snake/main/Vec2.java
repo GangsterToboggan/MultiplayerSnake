@@ -1,6 +1,8 @@
 package com.snake.main;
 
-public class Vec2 {
+import java.io.Serializable;
+
+public class Vec2 implements Serializable{
 	public double x,y;
 	public Vec2(double x1,double y1) {
 		this.x=x1;

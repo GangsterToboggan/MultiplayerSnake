@@ -2,22 +2,23 @@ package com.snake.main;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.Collection;
 import java.util.List;
 
 public class Apple extends Entity {
    public Vec2 pos = new Vec2(0,0);
    public int appleWidth=30;
-   public Apple(List<Snake> snakes) {
-	   generateAppleLocation(snakes);
+   public Apple(Collection<Snake> collection) {
+	   generateAppleLocation(collection);
    }
-	public void generateAppleLocation(List<Snake> snakes) { //This method will need to be updated later when we add in the snake's tail
+	public void generateAppleLocation(Collection<Snake> snakes) { //This method will need to be updated later when we add in the snake's tail
 		pos.x = generateRandomNum(1200, 0);
 		pos.y = generateRandomNum(800,0);
 		if (isSnakeThere (snakes, pos) == true) {
 			generateAppleLocation(snakes);
 		}
 	}
-	private boolean isSnakeThere(List<Snake> snakes, Vec2 pos) {
+	private boolean isSnakeThere(Collection<Snake> snakes, Vec2 pos) {
 		for (Snake snake : snakes) {
 			boolean a = isPosOccupied(snake, pos);
 			if (a==true) {

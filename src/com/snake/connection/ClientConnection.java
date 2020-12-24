@@ -4,14 +4,19 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.concurrent.Semaphore;
+
+import com.snake.main.*;
 
 public class ClientConnection extends Thread{  
 	Socket sock;
 	int UUID;
 	String username;
+	SnakeCanvas canvas;
 	boolean alive=true;
 	ObjectInputStream ois;
 	ObjectOutputStream oos;
+	Semaphore sendSem = new Semaphore(1);
 	
 	public ClientConnection(String ip, int port, String username, int UUID) {
 		try{      
@@ -24,6 +29,9 @@ public class ClientConnection extends Thread{
 			e.printStackTrace();
 		}
 	}
+	public void setCanvas(SnakeCanvas canvas) {
+		this.canvas=canvas;
+	}
 	@Override
 	public void run() {
 		try {
@@ -32,26 +40,32 @@ public class ClientConnection extends Thread{
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		while (alive) {
+		while (sock.isConnected()) {
 			try {
 				recv((Message)ois.readObject());
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
+				break;
 			}
 		}
+		System.err.println("!!Connection to server closed!!");
 	}
 	public void send(Message msg) {
 		try {
-			System.out.println("Sent message of type "+msg.type.name());
+		//	System.out.println("Sent message of type "+msg.type.name());
+			sendSem.acquire();
+			oos.reset();
 			oos.writeObject(msg);
 			oos.flush();
+			sendSem.release();
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	public void sendKeyboardUpdate(int keycode) {
@@ -68,13 +82,23 @@ public class ClientConnection extends Thread{
 		msg.data=username;
 		send(msg);
 	}
-	public void recv(Message msg) {
-		System.out.println("Client received message of type: "+msg.type.name()+" from "+msg.sender);
+	public void sendGameUpdateAck() {
+		Message msg = new Message();
+		msg.sender=UUID;
+		msg.type=MessageType.GAME_UPDATE_ACK;
+		msg.data=0;
+		send(msg);
 	}
-	
-	public static void main(String[] args) {  
-	   ClientConnection conn = new ClientConnection("localhost",6666,"Zack",57);
-	   conn.start();
-	   conn.sendJoin();
-	}  
+	public void recv(Message msg) {
+		//System.out.println("Client received message of type: "+msg.type.name()+" from "+msg.sender);
+		switch (msg.type) {
+		case GAME_UPDATE:
+			GameState state = (GameState) msg.data;
+			canvas.setGameState(state);
+			sendGameUpdateAck();
+			break;
+		
+		}
+	}
+	  
 }  

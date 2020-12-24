@@ -1,8 +1,8 @@
 package com.snake.main;
 
 import java.awt.Graphics;
+import java.io.Serializable;
 
-public abstract class Entity {
-	public Vec2 pos;
+public abstract class Entity implements Serializable{
 	public abstract void paintComponent(Graphics g);
 }

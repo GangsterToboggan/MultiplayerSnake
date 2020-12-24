@@ -6,6 +6,6 @@ public enum MessageType implements Serializable{
 	KEYBOARD_EVENT,
 	USER_JOIN,
 	USER_JOIN_ACK,
-	USER_UPDATE_ACK,
+	GAME_UPDATE_ACK,
 	GAME_UPDATE
 }

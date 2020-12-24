@@ -2,30 +2,27 @@ package com.snake.main;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Snake extends Entity{
-	public int score=100;
+public class Snake extends Entity implements Serializable{
+	public int score=50;
 	public double snakeWidth=10;
 	public double speed=50;
 	public Vec2 pos;
 	public Vec2 vel;
+	public String username;
 	public List<Vec2> tailPositions = new ArrayList<Vec2>();
 	
-	public  Snake(Vec2 start, Vec2 initialVel) {
+	public  Snake(String username, Vec2 start, Vec2 initialVel) {
+		this.username=username;
 		pos = start;
 		vel = initialVel;
-	}
-	
-	public void Test(String s) {
-		System.out.println("Snake Class: "+s);;
-	
 	}
 	public void paintComponent(Graphics g) {
 		g.setColor(Color.blue);
 		for (Vec2 vec : tailPositions) {
-			
 			g.fillOval((int)vec.x, (int)vec.y, (int)snakeWidth, (int)snakeWidth);
 		}
 	}
@@ -52,4 +49,5 @@ public class Snake extends Entity{
 	public void setVel(Vec2 vel) {
 		this.vel=vel;
 	}
+	
 }
