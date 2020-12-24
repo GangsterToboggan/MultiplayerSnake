@@ -29,6 +29,7 @@ public class Snake extends Entity implements Serializable{
 		g.setColor(Color.blue);
 		for (Vec2 vec : tailPositions) {
 			g.fillOval((int)vec.x, (int)vec.y, (int)snakeWidth, (int)snakeWidth);
+			g.drawString(username, (int)pos.x, (int)pos.y+50);
 		}
 	}
 	public void update(double deltaMs, Collection<Snake> snakes, Collection<Apple> apples) {
