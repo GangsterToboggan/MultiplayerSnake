@@ -2,46 +2,28 @@ package com.snake.main;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JPanel;
 
+import com.snake.connection.GameState;
+
 class SnakeCanvas extends JPanel implements MouseListener{
 
-	public List<Apple> apples = new ArrayList<>();  
-	public List<Snake> snakes = new ArrayList<>();
-
+	GameState state;
     public SnakeCanvas(){
         this.addMouseListener(this);
     }
-    
-    public void addSnake(Snake s) {
-    	this.snakes.add(s);
+    public void setGameState(GameState state) {
+    	this.state=state;
     }
-    public void addApple(Apple a) {
-    	this.apples.add(a);
-    }
-    public void update(double deltaMS) {
-    	for (Snake s : snakes) {
-    		s.update(deltaMS);
-    	}
-    }
-    
     public void paintComponent(Graphics g) {
     	g.setColor(new Color(20,30,20));
     	g.drawRect(0, 0,3000,2000);
     	g.setColor(Color.red);
-    	//g.fillRect(10, 10, 20, 20);
-    	for (Snake s : snakes) {
-    		s.paintComponent(g);
-    	}
-    	for (Apple a : apples) {
-    		a.paintComponent(g);
+    	for (Entity e : state.entities) {
+    		e.paintComponent(g);
     	}
     }
 

@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.List;
 
-public class Apple {
+public class Apple extends Entity {
    public Vec2 pos = new Vec2(0,0);
    public int appleWidth=30;
    public Apple(List<Snake> snakes) {

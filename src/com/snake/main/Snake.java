@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Snake {
+public class Snake extends Entity{
 	public int score=100;
 	public double snakeWidth=10;
 	public double speed=50;
