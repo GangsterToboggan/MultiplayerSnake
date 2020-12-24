@@ -70,6 +70,7 @@ public class ServerManager {
 	public void startGame() {
 		Thread t = new Thread() {
 			public void run() {
+				int counter = 0 ;
 				while(true) {
 					try {
 						dataSem.acquire();
@@ -83,9 +84,10 @@ public class ServerManager {
 							}
 						}
 						apples = newApples;
-						
-						apples.add(new Apple(snakeMap.values()));
-						System.out.println("Num Snakes : "+snakeMap.values().size());
+						if (apples.size() < snakeMap.size()*2 && counter++%200==0) {
+							apples.add(new Apple(snakeMap.values()));
+						}
+						//System.out.println("Num Snakes : "+snakeMap.values().size());
 						broadcastGameState();
 						dataSem.release();
 						Thread.sleep(20);

@@ -47,18 +47,18 @@ public class Snake extends Entity implements Serializable{
 		tailPositions=newTail;
 		
 		
-		/*for (Snake other : snakes) {
-			if (other.isPosOccupied(pos, this.snakeWidth)) {
+		for (Snake other : snakes) {
+			if (other.isPosOccupied(pos, this.snakeWidth) && !other.equals(this)) {
 				resetSnake();
 			}
-		}*/
-		/*
+		}
+		
 		for (Apple apple : apples) {
 			if (this.isPosOccupied(apple.pos,apple.appleWidth)) {
 				apple.setEaten(true);
 				this.score+=apple.numPoints;
 			}
-		}*/
+		}
 		
 	}
 	public void resetSnake() {
