@@ -24,9 +24,9 @@ public class Main  {
         KeyboardManager keyManager = new KeyboardManager(snake);
         frame.addKeyListener(keyManager);
         
-        canvas.addSnake(snake);
-        Apple apple = new Apple(canvas.snakes);
-        canvas.addApple(apple);
+       // canvas.addSnake(snake);
+       // Apple apple = new Apple(canvas.snakes);
+       // canvas.addApple(apple);
         
         Thread t = new Thread() {
         	public void run() {
@@ -35,7 +35,7 @@ public class Main  {
         		 frame.invalidate();
         	     frame.validate();
         	     frame.repaint();
-        	     canvas.update(20);
+        	  //   canvas.update(20);
         	     try {
 					Thread.sleep(20);
 				} catch (InterruptedException e) {
