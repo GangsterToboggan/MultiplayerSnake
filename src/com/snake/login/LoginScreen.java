@@ -15,6 +15,8 @@ import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.border.Border;
 
+import com.snake.main.ClientGame;
+
 public class LoginScreen {
 	public static void main(String[] args) {
 		int frameWidth = 800;
@@ -105,10 +107,12 @@ public class LoginScreen {
 	}
 	
 	public static void connectMethod(String username, String ip, int port) { //ZACK THIS SHOULD HAVE ALL THE INFORMATION YOU NEED
-		System.out.println("lol!");
-		System.out.println(username);
-		System.out.println(ip);
-		System.out.println(""+port);
+		System.out.println("Connecting to ");
+		System.out.println("Ip: "+ip);
+		System.out.println("Username: "+username);
+		System.out.println("Port: "+port);
+		ClientGame.run(ip, port, username);
+		
 	}
 	public static void setFontSize(JTextField field, float size) {
 		 field.setFont (field.getFont ().deriveFont (size));
