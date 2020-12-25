@@ -13,6 +13,7 @@ public class Snake extends Entity implements Serializable{
 	public static transient final int SNAKE_SPEED = 70;
 	public static transient final int TIME_BETWEEN_TAIL=100;
 	public int score;
+	public int length=1;
 	public double snakeWidth;
 	public double speed;
 	public double superSpeed=0;
@@ -26,6 +27,7 @@ public class Snake extends Entity implements Serializable{
 	
 	public  Snake(String username, Collection<Snake> snakes) {
 		this.username=username;
+		
 		this.resetSnake(snakes);
 		
 	}
@@ -45,7 +47,7 @@ public class Snake extends Entity implements Serializable{
 		g.setColor(headColor);
 		g.fillOval((int)pos.x -(int)snakeWidth/2, (int)pos.y-(int)snakeWidth/2, (int)snakeWidth, (int)snakeWidth);
 		for (int i =tailPositions.size()-1; i>=0; i--) {
-			double colorMultiple  = ((Math.cos(i/50.0)+1.0)/2.0);
+			double colorMultiple  = ((Math.cos(i/30.0)+1.0)/2.0);
 			g.setColor(new Color(
 					(int)(colorMultiple*headColor.getRed()),
 					(int)(colorMultiple*headColor.getGreen()),
@@ -68,30 +70,33 @@ public class Snake extends Entity implements Serializable{
 		vel.norm();
 		elapsedTimeSpecial+=deltaMs;
 		
-		List<Vec2> newTail = new ArrayList<>();
+		//sqrt(x)*ln(x+1)
+		this.length=(int)Math.ceil(Math.sqrt(this.score)*Math.log(this.score+1));
 		
+		List<Vec2> newTail = new ArrayList<>();
 		
 		pos.add(vel.clone().norm().scale(speed).scale(deltaMs/1000.0));
 		while (elapsedTimeSpecial>TIME_BETWEEN_TAIL) {
 			elapsedTimeSpecial-=TIME_BETWEEN_TAIL;
 			newTail.add(pos.clone());
-			if(tailPositions.size()+1<score) {
+			if(tailPositions.size()+1<length) {
 				tailPositions.add(pos);
 			}
-			for (int i =0; i<tailPositions.size()-1 && i<score+1; i++) {
+			for (int i =0; i<tailPositions.size()-1 && i<length+1; i++) {
 				newTail.add(tailPositions.get(i));
 			}
 			tailPositions=newTail;
 			
 		}
 		superSpeed/=1.05;
+		// c/(1+e^((x-c)/c))
 		this.speed=this.SNAKE_SPEED+40.0/(1.0+Math.exp((this.score-20)/20.0))+superSpeed;
-		this.snakeWidth=this.SNAKE_WIDTH+Math.log(this.score+2)*2-0.69;
+		this.snakeWidth=this.SNAKE_WIDTH+Math.log(this.score+2)*2.1-0.69;
 		
 		
 		for (Snake other : snakes) {
 			if (other.isPosOccupied(pos, other.snakeWidth/2.0) && !other.equals(this)) {
-				other.score+=this.score/3;
+				other.score+=this.score*5/12;
 				this.resetSnake(snakes);
 			}
 		}
