@@ -32,7 +32,7 @@ public class Snake extends Entity implements Serializable{
 		g.fillOval((int)pos.x -(int)snakeWidth/2, (int)pos.y-(int)snakeWidth/2, (int)snakeWidth, (int)snakeWidth);
 		for (Vec2 vec : tailPositions) {
 			g.fillOval((int)vec.x - (int)snakeWidth/2, (int)vec.y - (int)snakeWidth/2, (int)snakeWidth, (int)snakeWidth);
-			g.drawString(username, (int)pos.x, (int)pos.y+30);
+			g.drawString(username+" ("+this.score+")", (int)pos.x, (int)pos.y+30);
 		}
 	}
 	
@@ -67,6 +67,9 @@ public class Snake extends Entity implements Serializable{
 			
 		}
 	
+		this.speed=this.SNAKE_SPEED+40.0/(1.0+Math.exp((this.score-20)/20.0));
+		this.snakeWidth=this.SNAKE_WIDTH+Math.log(this.score+2)*2-0.69;
+		
 		
 		for (Snake other : snakes) {
 			if (other.isPosOccupied(pos, other.snakeWidth/2.0) && !other.equals(this)) {

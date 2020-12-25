@@ -26,7 +26,7 @@ public class ClientGame {
         frame.setSize(SCREEN_WIDTH,SCREEN_HEIGHT+35);
         frame.add(canvas);
         frame.setVisible(true);
-      //  frame.setResizable(false);
+        frame.setResizable(false);
         KeyboardManager keyManager = new KeyboardManager(conn);
         frame.addKeyListener(keyManager);
         

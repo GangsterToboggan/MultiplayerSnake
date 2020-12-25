@@ -9,12 +9,13 @@ public class Apple extends Entity {
    public Vec2 pos = new Vec2(0,0);
    private boolean eaten=false;
    public static transient final int APPLE_MEAN_WIDTH=30;
-   public static transient final int APPLE_MEAN_POINTS=10;
+   public static transient final int APPLE_MEAN_POINTS=5;
    public int appleWidth;
    public int numPoints;
    public Apple(Collection<Snake> collection) {
 	   generateAppleLocation(collection);
 	   double scalar = Math.random()+Math.random(); // 2E[x]=1
+	   scalar = Math.max(scalar, 0.2);
 	   this.appleWidth=(int)(APPLE_MEAN_WIDTH*scalar);
 	   this.numPoints=(int)(APPLE_MEAN_POINTS*scalar);
    }
