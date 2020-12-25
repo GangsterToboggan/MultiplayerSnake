@@ -23,10 +23,10 @@ public class ClientGame {
 		SnakeCanvas canvas = new SnakeCanvas();
 		JFrame frame = new JFrame("ZnaKe");
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setSize(SCREEN_WIDTH,SCREEN_HEIGHT);
+        frame.setSize(SCREEN_WIDTH,SCREEN_HEIGHT+35);
         frame.add(canvas);
         frame.setVisible(true);
-        
+      //  frame.setResizable(false);
         KeyboardManager keyManager = new KeyboardManager(conn);
         frame.addKeyListener(keyManager);
         

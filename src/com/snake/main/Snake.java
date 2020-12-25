@@ -8,9 +8,9 @@ import java.util.Collection;
 import java.util.List;
 
 public class Snake extends Entity implements Serializable{
-	public static transient final int RESET_SCORE = 10;
+	public static transient final int RESET_SCORE = 5;
 	public static transient final int SNAKE_WIDTH = 10;
-	public static transient final int SNAKE_SPEED = 50;
+	public static transient final int SNAKE_SPEED = 70;
 	public static transient final int TIME_BETWEEN_TAIL=100;
 	public int score;
 	public double snakeWidth;
@@ -22,18 +22,17 @@ public class Snake extends Entity implements Serializable{
 	public List<Vec2> tailPositions = new ArrayList<Vec2>();
 	
 	
-	public  Snake(String username, Vec2 start, Vec2 initialVel, Collection<Snake> snakes) {
-		this.resetSnake(snakes);
+	public  Snake(String username, Collection<Snake> snakes) {
 		this.username=username;
-		pos = start;
-		vel = initialVel;
+		this.resetSnake(snakes);
+		
 	}
 	public void paintComponent(Graphics g) {
 		g.setColor(Color.blue);
 		g.fillOval((int)pos.x, (int)pos.y, (int)snakeWidth, (int)snakeWidth);
 		for (Vec2 vec : tailPositions) {
 			g.fillOval((int)vec.x, (int)vec.y, (int)snakeWidth, (int)snakeWidth);
-			g.drawString(username, (int)pos.x, (int)pos.y+50);
+			g.drawString(username, (int)pos.x, (int)pos.y+30);
 		}
 	}
 	
@@ -106,8 +105,15 @@ public class Snake extends Entity implements Serializable{
 		this.pos = generateRespawn(snakes);
 		this.vel= directionToCenter(pos, ClientGame.SCREEN_WIDTH, ClientGame.SCREEN_HEIGHT);
 		this.score= RESET_SCORE;
+		this.tailPositions=new ArrayList<>();
 		this.snakeWidth=SNAKE_WIDTH;
 		this.speed=SNAKE_SPEED;
+		if (this.username.equals("speedy")) {
+			this.speed=SNAKE_SPEED*3;
+		}
+		if (this.username.equals("fatty")) {
+			this.snakeWidth=SNAKE_WIDTH*3;
+		}
 	}
 	public double generateRandomNum(double max, double min) {
 		return Math.random() * (max - min + 1) + min;

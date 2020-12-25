@@ -65,8 +65,8 @@ public class SnakeCanvas extends JPanel implements MouseListener{
     public void paintComponent(Graphics g) {
     	try {
 			stateSem.acquire();
-			g.setColor(new Color(20,30,20));
-	    	g.drawRect(0, 0,3000,2000);
+			g.setColor(new Color(20,30,200));
+	    	g.drawRect(0, 0,ClientGame.SCREEN_WIDTH,ClientGame.SCREEN_HEIGHT);
 	    	g.setColor(Color.red);
 	    	for (Entity e : state.entities) {
 	    		e.paintComponent(g);

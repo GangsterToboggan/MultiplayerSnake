@@ -8,10 +8,15 @@ import java.util.List;
 public class Apple extends Entity {
    public Vec2 pos = new Vec2(0,0);
    private boolean eaten=false;
-   public int appleWidth=30;
-   public int numPoints = 10;
+   public static transient final int APPLE_MEAN_WIDTH=30;
+   public static transient final int APPLE_MEAN_POINTS=10;
+   public int appleWidth;
+   public int numPoints;
    public Apple(Collection<Snake> collection) {
 	   generateAppleLocation(collection);
+	   double scalar = Math.random()+Math.random(); // 2E[x]=1
+	   this.appleWidth=(int)(APPLE_MEAN_WIDTH*scalar);
+	   this.numPoints=(int)(APPLE_MEAN_POINTS*scalar);
    }
 	public void generateAppleLocation(Collection<Snake> snakes) { //This method will need to be updated later when we add in the snake's tail
 		pos.x = Utils.generateRandomNum(1200, 0);

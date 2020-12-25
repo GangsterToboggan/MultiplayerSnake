@@ -85,7 +85,7 @@ public class ServerManager {
 							}
 						}
 						apples = newApples;
-						if (apples.size() < snakeMap.size()*2 && counter++%200==0) {
+						if (apples.size() < snakeMap.size()*3 && counter++%100==0) {
 							apples.add(new Apple(snakeMap.values()));
 						}
 						//System.out.println("Num Snakes : "+snakeMap.values().size());
@@ -107,7 +107,7 @@ public class ServerManager {
 	public void addSnake(int userId, String username) {
 		try {
 			dataSem.acquire();
-			snakeMap.put(userId, new Snake(username, new Vec2(300,300), new Vec2(5,5), snakes));
+			snakeMap.put(userId, new Snake(username, snakes));
 			dataSem.release();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
