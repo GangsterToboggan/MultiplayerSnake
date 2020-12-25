@@ -21,8 +21,9 @@ public class Snake extends Entity implements Serializable{
 	private double elapsedTimeSpecial;
 	public List<Vec2> tailPositions = new ArrayList<Vec2>();
 	
-	public  Snake(String username, Vec2 start, Vec2 initialVel) {
-		this.resetSnake();
+	
+	public  Snake(String username, Vec2 start, Vec2 initialVel, Collection<Snake> snakes) {
+		this.resetSnake(snakes);
 		this.username=username;
 		pos = start;
 		vel = initialVel;
@@ -35,12 +36,22 @@ public class Snake extends Entity implements Serializable{
 			g.drawString(username, (int)pos.x, (int)pos.y+50);
 		}
 	}
+	
+	public boolean detectEdgeContact(Vec2 pos) {
+		if (pos.x <= 0 || pos.x>= ClientGame.SCREEN_WIDTH || pos.y <= 0 || pos.y >= ClientGame.SCREEN_HEIGHT){
+			return true;
+		}
+		return false;
+	}
+	
 	public void update(double deltaMs, Collection<Snake> snakes, Collection<Apple> apples) {
 		vel.norm();
 		elapsedTimeSpecial+=deltaMs;
 		
 		List<Vec2> newTail = new ArrayList<>();
-		
+		if (detectEdgeContact(pos) == true) {
+			resetSnake(snakes);
+		}
 		
 		pos.add(vel.clone().norm().scale(speed).scale(deltaMs/1000.0));
 		while (elapsedTimeSpecial>TIME_BETWEEN_TAIL) {
@@ -60,7 +71,7 @@ public class Snake extends Entity implements Serializable{
 		
 		for (Snake other : snakes) {
 			if (other.isPosOccupied(pos, this.snakeWidth) && !other.equals(this)) {
-				resetSnake();
+				resetSnake(snakes);
 			}
 		}
 		
@@ -72,12 +83,34 @@ public class Snake extends Entity implements Serializable{
 		}
 		
 	}
-	public void resetSnake() {
-		this.pos=new Vec2(300,300);
-		this.vel=new Vec2(5,5);
-		this.score=RESET_SCORE;
+	public Vec2 generateRespawn(Collection<Snake> snakes) { 
+		double x = generateRandomNum(1100,100);
+		double y = generateRandomNum(700,100);
+		Vec2 temporary = new Vec2(x,y);
+		if (Utils.isSnakeThere(snakes, temporary, (int)snakeWidth) == true) {
+			generateRespawn(snakes);
+		}
+		return temporary;
+		
+	}
+	
+	public Vec2 directionToCenter(Vec2 pos, int screenWidth, int screenHeight) {
+		double x = pos.x - screenWidth/2;
+		double y = pos.y - screenHeight/2;
+		Vec2 a = new Vec2(x,y);
+		return a.scale(-1);
+	}
+	
+	
+	public void resetSnake(Collection<Snake> snakes) {
+		this.pos = generateRespawn(snakes);
+		this.vel= directionToCenter(pos, ClientGame.SCREEN_WIDTH, ClientGame.SCREEN_HEIGHT);
+		this.score= RESET_SCORE;
 		this.snakeWidth=SNAKE_WIDTH;
 		this.speed=SNAKE_SPEED;
+	}
+	public double generateRandomNum(double max, double min) {
+		return Math.random() * (max - min + 1) + min;
 	}
 	public boolean isPosOccupied(Vec2 pos) {
 		return this.isPosOccupied(pos,0);

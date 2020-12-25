@@ -19,6 +19,7 @@ public class ServerManager {
 	public static final int MSPT=50;
 	private HashMap<Integer, Snake> snakeMap = new HashMap<>();
 	private List<Apple> apples = new ArrayList<>();
+	private List<Snake> snakes = new ArrayList<>();
 	private Semaphore dataSem = new Semaphore(1);
 	
 	private List<Connection> connections = new ArrayList<Connection>();
@@ -106,7 +107,7 @@ public class ServerManager {
 	public void addSnake(int userId, String username) {
 		try {
 			dataSem.acquire();
-			snakeMap.put(userId, new Snake(username, new Vec2(300,300), new Vec2(5,5)));
+			snakeMap.put(userId, new Snake(username, new Vec2(300,300), new Vec2(5,5), snakes));
 			dataSem.release();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
