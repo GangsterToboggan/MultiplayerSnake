@@ -40,6 +40,6 @@ public class Apple extends Entity {
 	}
 	public void paintComponent(Graphics g) {
 		g.setColor(Color.MAGENTA);
-		g.fillOval((int)pos.x, (int)pos.y, (int)appleWidth, (int)appleWidth);
+		g.fillOval((int)pos.x -appleWidth/2, (int)pos.y-appleWidth/2, (int)appleWidth, (int)appleWidth);
 	}
 }
