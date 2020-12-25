@@ -95,7 +95,7 @@ public class Snake extends Entity implements Serializable{
 	public void resetSnake(Collection<Snake> snakes) {
 		this.pos = generateRespawn(snakes);
 		this.vel= directionToCenter(pos, ClientGame.SCREEN_WIDTH, ClientGame.SCREEN_HEIGHT);
-		this.score=RESET_SCORE;
+		this.score= RESET_SCORE;
 		this.snakeWidth=SNAKE_WIDTH;
 		this.speed=SNAKE_SPEED;
 	}
