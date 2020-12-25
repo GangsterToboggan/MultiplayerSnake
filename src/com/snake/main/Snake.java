@@ -69,13 +69,13 @@ public class Snake extends Entity implements Serializable{
 	
 		
 		for (Snake other : snakes) {
-			if (other.isPosOccupied(pos, this.snakeWidth) && !other.equals(this)) {
+			if (other.isPosOccupied(pos, other.snakeWidth/2.0) && !other.equals(this)) {
 				resetSnake(snakes);
 			}
 		}
 		
 		for (Apple apple : apples) {
-			if (this.isPosOccupied(apple.pos,apple.appleWidth)) {
+			if (this.isPosOccupied(apple.pos,apple.appleWidth/2.0)) {
 				apple.setEaten(true);
 				this.score+=apple.numPoints;
 			}
