@@ -127,35 +127,3 @@ public class LoginScreen {
 
 
 
-/*
-JFrame f = new JFrame();
-f.setLayout(new FlowLayout(FlowLayout.LEFT));
-f.setSize(800, 800);
-JLabel welcome = new JLabel();
-welcome.setText("Welcome to [insert title]!");
-welcome.setVisible(true);
-welcome.setLocation(0,0);
-
-JTextField ip = new JTextField();
-JLabel ipLabel = new JLabel();
-ipLabel.setText("Server ip");
-int a = 1;
-while (a==1) {
-	if (ip.getText() == "") {
-		ipLabel.setVisible(true);
-	}else {
-		ipLabel.setVisible(false);
-		a = 0;
-	}
-}
-
-JButton connect = new JButton();
-connect.setText("Connect!");
-connect.addActionListener(new ActionListener() { 
-    public void actionPerformed(ActionEvent e) { 
-        connectMethod();
-    } 
-});
-f.add(welcome);
-f.setVisible(true);
-*/

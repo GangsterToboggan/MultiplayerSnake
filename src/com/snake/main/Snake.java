@@ -20,6 +20,7 @@ public class Snake extends Entity implements Serializable{
 	public String username;
 	private double elapsedTimeSpecial;
 	public List<Vec2> tailPositions = new ArrayList<Vec2>();
+	Color headColor = colorGenerator(); 
 	
 	
 	public  Snake(String username, Collection<Snake> snakes) {
@@ -27,11 +28,30 @@ public class Snake extends Entity implements Serializable{
 		this.resetSnake(snakes);
 		
 	}
+	public Color colorGenerator() {
+		Color headColor = new Color(
+				(int)Utils.generateRandomNum(220, 175),
+				(int)Utils.generateRandomNum(220, 175),
+				(int)Utils.generateRandomNum(220, 175));
+		
+		
+		return headColor;
+	}
+	
+	
+	
 	public void paintComponent(Graphics g) {
-		g.setColor(Color.blue);
+		g.setColor(headColor);
 		g.fillOval((int)pos.x -(int)snakeWidth/2, (int)pos.y-(int)snakeWidth/2, (int)snakeWidth, (int)snakeWidth);
-		for (Vec2 vec : tailPositions) {
+		for (int i =tailPositions.size()-1; i>=0; i--) {
+			double colorMultiple  = ((Math.cos(i/50.0)+1.0)/2.0);
+			g.setColor(new Color(
+					(int)(colorMultiple*headColor.getRed()),
+					(int)(colorMultiple*headColor.getGreen()),
+					(int)(colorMultiple*headColor.getBlue())));
+			Vec2 vec = tailPositions.get(i);
 			g.fillOval((int)vec.x - (int)snakeWidth/2, (int)vec.y - (int)snakeWidth/2, (int)snakeWidth, (int)snakeWidth);
+			g.setColor(Color.BLUE);
 			g.drawString(username+" ("+this.score+")", (int)pos.x, (int)pos.y+30);
 		}
 	}
