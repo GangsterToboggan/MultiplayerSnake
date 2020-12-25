@@ -50,6 +50,7 @@ public class ClientConnection extends Thread{
 				break;
 			}
 		}
+		alive=false;
 		System.err.println("!!Connection to server closed!!");
 	}
 	public void send(Message msg) {

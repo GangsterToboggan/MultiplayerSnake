@@ -10,14 +10,14 @@ import com.snake.connection.ClientConnection;
 public class ClientGame {
 	public static final int SCREEN_WIDTH = 1200;
 	public static final int SCREEN_HEIGHT = 800;
+	public static final int CLIENT_MSPT = 20;
 	public static void main(String[] args) {
 		run("localhost",6666,"Zack");
 	}
 	public static void run(String ip, int port, String username) {
 		Random rand = new Random();
-		rand.setSeed(0);
-		ClientConnection conn = new ClientConnection(ip,port,username,89);
-		
+		rand.setSeed(System.nanoTime());
+		ClientConnection conn = new ClientConnection(ip,port,username,rand.nextInt()%100000);
 		
 		
 		SnakeCanvas canvas = new SnakeCanvas();
@@ -42,8 +42,9 @@ public class ClientGame {
         		 frame.invalidate();
         	     frame.validate();
         	     frame.repaint();
+        	     canvas.update(CLIENT_MSPT);
         	     try {
-					Thread.sleep(100);
+					Thread.sleep(CLIENT_MSPT);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}

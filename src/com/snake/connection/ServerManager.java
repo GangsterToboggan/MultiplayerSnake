@@ -16,7 +16,7 @@ import com.snake.main.Snake;
 import com.snake.main.Vec2;
 
 public class ServerManager {  
-	
+	public static final int MSPT=50;
 	private HashMap<Integer, Snake> snakeMap = new HashMap<>();
 	private List<Apple> apples = new ArrayList<>();
 	private Semaphore dataSem = new Semaphore(1);
@@ -46,7 +46,7 @@ public class ServerManager {
 		t.start();
 		
 	}
-	public void broadcast(Message msg) {
+	public void broadcast(Message msg) throws Exception{
 		//System.out.println("Broadcasting message of type: "+msg.type.name());
 		for (Connection conn : connections) {
 			if (conn.alive) {
@@ -54,7 +54,7 @@ public class ServerManager {
 			}
 		}
 	}
-	public void broadcastGameState() {
+	public void broadcastGameState() throws Exception{
 		GameState state = new GameState();
 		state.entities= new ArrayList<>();
 		state.entities.addAll(apples);
@@ -75,7 +75,7 @@ public class ServerManager {
 					try {
 						dataSem.acquire();
 						for (Snake s : snakeMap.values()) {
-							s.update(20, snakeMap.values(),apples);
+							s.update(MSPT, snakeMap.values(),apples);
 						}
 						List<Apple> newApples = new ArrayList<>();
 						for (Apple a : apples) {
@@ -90,10 +90,13 @@ public class ServerManager {
 						//System.out.println("Num Snakes : "+snakeMap.values().size());
 						broadcastGameState();
 						dataSem.release();
-						Thread.sleep(20);
+						Thread.sleep(MSPT);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
+					} catch (Exception e) {
+						dataSem.release();
 					}
+					
 				}
 			}
 		};
@@ -167,39 +170,45 @@ class Connection extends Thread{
 			oos.reset();
 			oos.writeObject(msg);
 			oos.flush();
-			sendSem.release();
+			
 		} catch (IOException e1) {
 			e1.printStackTrace();
-		} catch (InterruptedException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
+		sendSem.release();
 	}
 	@Override
 	public void run() {
 		try {
-			while (sock.isConnected()) {
-				
-				Message message = (Message) ois.readObject();
-				//System.out.println("Server received message of type: "+message.type.name()+" from "+message.sender);
-				switch (message.type) {
-				case USER_JOIN:
-					remoteID=message.sender;
-					serverManager.addSnake(remoteID, (String)message.data);
-					Message sendmsg = new Message();
-					sendmsg.sender=0;
-					sendmsg.type = MessageType.USER_JOIN_ACK;
-					sendmsg.data=0;
-					send(sendmsg);
-					break;
-				case KEYBOARD_EVENT:
-					serverManager.registerKeyPress(message.sender, (int)message.data);
-					break;
+			while (sock.isConnected()&&alive) {
+				try {
+					Message message = (Message) ois.readObject();
+					//System.out.println("Server received message of type: "+message.type.name()+" from "+message.sender);
+					switch (message.type) {
+					case USER_JOIN:
+						remoteID=message.sender;
+						serverManager.addSnake(remoteID, (String)message.data);
+						Message sendmsg = new Message();
+						sendmsg.sender=0;
+						sendmsg.type = MessageType.USER_JOIN_ACK;
+						sendmsg.data=0;
+						send(sendmsg);
+						break;
+					case KEYBOARD_EVENT:
+						serverManager.registerKeyPress(message.sender, (int)message.data);
+						break;
+						
+					}
 					
-				
+				}catch(Exception e) {
+					e.printStackTrace();
+					alive=false;
 				}
 			}
-			
+			alive=false;
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

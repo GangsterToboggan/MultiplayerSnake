@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Semaphore;
 
 import javax.swing.JPanel;
@@ -15,6 +16,8 @@ public class SnakeCanvas extends JPanel implements MouseListener{
 
 	GameState state = new GameState();
 	Semaphore stateSem = new Semaphore(1);
+	List<Snake> snakes = new ArrayList<>();
+	List<Apple> apples = new ArrayList<>();
     public SnakeCanvas(){
     	state.entities=new ArrayList<>();
         this.addMouseListener(this);
@@ -23,12 +26,42 @@ public class SnakeCanvas extends JPanel implements MouseListener{
     	try {
 			stateSem.acquire();
 			this.state=state;
+			this.snakes=new ArrayList<>();
+			this.apples= new ArrayList<>();
+			for (Entity e : state.entities) {
+				if ( e instanceof Snake) {
+					snakes.add((Snake)e);
+				}else if (e instanceof Apple) {
+					apples.add((Apple) e);
+				}
+			}
 	    	stateSem.release();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
     	
     }
+    public void update(int deltaT) {
+    	try {
+			stateSem.acquire();
+			
+			for (Snake s : snakes) {
+				s.update(deltaT, snakes,apples);
+			}
+			List<Apple> newApples = new ArrayList<>();
+			for (Apple a : apples) {
+				if (!a.isEaten()) {
+					newApples.add(a);
+				}
+			}
+			
+	    	stateSem.release();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+    	
+    }
+    
     public void paintComponent(Graphics g) {
     	try {
 			stateSem.acquire();
