@@ -15,7 +15,7 @@ public class Apple extends Entity {
    public Apple(Collection<Snake> collection) {
 	   generateAppleLocation(collection);
 	   double scalar = Math.random()+Math.random(); // 2E[x]=1
-	   scalar = Math.max(scalar, 0.2);
+	   scalar = Math.max(scalar, 0.4);
 	   this.appleWidth=(int)(APPLE_MEAN_WIDTH*scalar);
 	   this.numPoints=(int)(APPLE_MEAN_POINTS*scalar);
    }

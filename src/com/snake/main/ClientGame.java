@@ -1,7 +1,10 @@
 package com.snake.main;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.Random;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 

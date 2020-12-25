@@ -15,6 +15,7 @@ public class Snake extends Entity implements Serializable{
 	public int score;
 	public double snakeWidth;
 	public double speed;
+	public double superSpeed=0;
 	public Vec2 pos;
 	public Vec2 vel;
 	public String username;
@@ -48,9 +49,7 @@ public class Snake extends Entity implements Serializable{
 		elapsedTimeSpecial+=deltaMs;
 		
 		List<Vec2> newTail = new ArrayList<>();
-		if (detectEdgeContact(pos) == true) {
-			resetSnake(snakes);
-		}
+		
 		
 		pos.add(vel.clone().norm().scale(speed).scale(deltaMs/1000.0));
 		while (elapsedTimeSpecial>TIME_BETWEEN_TAIL) {
@@ -58,23 +57,26 @@ public class Snake extends Entity implements Serializable{
 			newTail.add(pos.clone());
 			if(tailPositions.size()+1<score) {
 				tailPositions.add(pos);
-				
 			}
-			for (int i =0; i<tailPositions.size()-1; i++) {
+			for (int i =0; i<tailPositions.size()-1 && i<score+1; i++) {
 				newTail.add(tailPositions.get(i));
 			}
 			tailPositions=newTail;
 			
 		}
-	
-		this.speed=this.SNAKE_SPEED+40.0/(1.0+Math.exp((this.score-20)/20.0));
+		superSpeed/=1.05;
+		this.speed=this.SNAKE_SPEED+40.0/(1.0+Math.exp((this.score-20)/20.0))+superSpeed;
 		this.snakeWidth=this.SNAKE_WIDTH+Math.log(this.score+2)*2-0.69;
 		
 		
 		for (Snake other : snakes) {
 			if (other.isPosOccupied(pos, other.snakeWidth/2.0) && !other.equals(this)) {
-				resetSnake(snakes);
+				other.score+=this.score/3;
+				this.resetSnake(snakes);
 			}
+		}
+		if (detectEdgeContact(pos)) {
+			resetSnake(snakes);
 		}
 		
 		for (Apple apple : apples) {
@@ -85,6 +87,7 @@ public class Snake extends Entity implements Serializable{
 		}
 		
 	}
+	
 	public Vec2 generateRespawn(Collection<Snake> snakes) { 
 		double x = generateRandomNum(1100,100);
 		double y = generateRandomNum(700,100);

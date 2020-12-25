@@ -85,7 +85,7 @@ public class ServerManager {
 							}
 						}
 						apples = newApples;
-						if (apples.size() < snakeMap.size()*3 && counter++%100==0) {
+						if (apples.size() < snakeMap.size()*3 && counter++%20==0) {
 							apples.add(new Apple(snakeMap.values()));
 						}
 						//System.out.println("Num Snakes : "+snakeMap.values().size());
@@ -139,6 +139,15 @@ public class ServerManager {
 				break;
 			case 68: // D
 				snake.vel.add(new Vec2(1,0).scale(scalar));
+				break;
+			case 32: // Space
+				if (snake.score>15) {
+					snake.superSpeed+=70;
+					snake.score-=8;
+				}
+				break;
+			default:
+				System.out.println("Unused keycode: "+keycode);
 				break;
 			}
 			dataSem.release();
