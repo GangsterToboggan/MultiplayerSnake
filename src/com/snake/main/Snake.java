@@ -29,9 +29,9 @@ public class Snake extends Entity implements Serializable{
 	}
 	public void paintComponent(Graphics g) {
 		g.setColor(Color.blue);
-		g.fillOval((int)pos.x, (int)pos.y, (int)snakeWidth, (int)snakeWidth);
+		g.fillOval((int)pos.x -(int)snakeWidth/2, (int)pos.y-(int)snakeWidth/2, (int)snakeWidth, (int)snakeWidth);
 		for (Vec2 vec : tailPositions) {
-			g.fillOval((int)vec.x, (int)vec.y, (int)snakeWidth, (int)snakeWidth);
+			g.fillOval((int)vec.x - (int)snakeWidth/2, (int)vec.y - (int)snakeWidth/2, (int)snakeWidth, (int)snakeWidth);
 			g.drawString(username, (int)pos.x, (int)pos.y+30);
 		}
 	}
