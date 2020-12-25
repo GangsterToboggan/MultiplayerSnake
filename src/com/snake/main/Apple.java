@@ -19,8 +19,8 @@ public class Apple extends Entity {
 	   this.numPoints=(int)(APPLE_MEAN_POINTS*scalar);
    }
 	public void generateAppleLocation(Collection<Snake> snakes) { //This method will need to be updated later when we add in the snake's tail
-		pos.x = Utils.generateRandomNum(1200, 0);
-		pos.y = Utils.generateRandomNum(800,0);
+		pos.x = Utils.generateRandomNum(ClientGame.SCREEN_WIDTH-100, 100);
+		pos.y = Utils.generateRandomNum(ClientGame.SCREEN_HEIGHT-100,100);
 		if (Utils.isSnakeThere(snakes, pos, appleWidth/2)) {
 			generateAppleLocation(snakes);
 		}
