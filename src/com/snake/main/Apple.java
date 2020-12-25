@@ -56,6 +56,6 @@ public class Apple extends Entity {
 		//g.fillOval((int)pos.x -appleWidth/2, (int)pos.y-appleWidth/2, (int)appleWidth, (int)appleWidth);
 		 
         //g.drawImage(i, 120,100,this);  
-		g.drawImage(appleImage, (int)pos.x -appleWidth/2, (int)pos.y-appleWidth/2, this.appleWidth,this.appleWidth,null);
+		g.drawImage(appleImage, (int)pos.x -appleWidth/2, (int)pos.y-appleWidth/2, this.appleWidth,this.appleWidth,new Color(0,0,0),null);
 	}
 }

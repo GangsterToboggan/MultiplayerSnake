@@ -127,6 +127,12 @@ public class Snake extends Entity implements Serializable{
 				this.score+=apple.numPoints;
 			}
 		}
+		for (int i=6; i<tailPositions.size(); i++) {
+			Vec2 tailPos = tailPositions.get(i);
+			if (pos.distTo(tailPos)<this.snakeWidth) {
+				this.resetSnake(snakes);
+			}
+		}
 		
 	}
 	
